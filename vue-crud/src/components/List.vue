@@ -1,4 +1,5 @@
 <template>
+
     <div class="container">
         <h1>List All Book</h1>
         <hr>
@@ -17,11 +18,15 @@
                 <td>{{ formatCurrencyVND(book.price) }}</td>
                 <td>
                     <a @click="deleteBook(book)"  onclick="return confirm('Chac chua')" class="btn btn-danger">Delete</a>
-                    <a @click="getID" class="btn btn-success">Update</a>
+                    <!-- <a @click="getID" class="btn btn-success">Update</a> -->
+                    <router-link :to="'/book/'+ book.ID" class="btn btn-success">Edit</router-link>
                 </td>
             </tr>
         </table>
+
     </div>
+
+   
 </template>
 <script lang="ts">
 import BookServices from "@/services/BookServices";
@@ -62,15 +67,12 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     console.log(response.data);
                     this.getAll()
+                    this.$router.push({ name: "List" });
                 })
                 .catch((e: Error) => {
                     console.log(e);
                 });
-        },
-        getID(){
-            console.log(this.currentBook.ID)
         }
-        
     },
     mounted() {
         this.getAll()

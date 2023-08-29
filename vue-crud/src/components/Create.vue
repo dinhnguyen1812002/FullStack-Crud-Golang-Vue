@@ -1,42 +1,45 @@
 <template>
-   <h1>thêm sản phẩm</h1>
-<div class="container">
-    <div class="submit-form">
-        <div v-if="!submitted">
-            <div class="row g-1">
-                <div class="col">
-                    <!-- Name input -->
-                    <div class="form-outline">
-                        <input type="text" id="form9Example1" v-model="Book.title" class="form-control" placeholder="Name" />
+    <h1>thêm sản phẩm</h1>
+
+        <div class="container">
+            <div class="submit-form">
+                <div v-if="!submitted">
+                    <div class="row g-1">
+                        <div class="col">
+                            <!-- Name input -->
+                            <div class="form-outline">
+                                <input type="text" id="form9Example1" v-model="Book.title" class="form-control"
+                                    placeholder="Title" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Gutter g-5 -->
+                    <div class="row g-5">
+                        <div class="col">
+                            <!-- Name input -->
+                            <div class="form-outline">
+                                <input type="text" id="form9Example3" v-model="Book.author" class="form-control"
+                                    placeholder="Author" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr />
-            <!-- Gutter g-5 -->
-            <div class="row g-5">
-                <div class="col">
-                    <!-- Name input -->
-                    <div class="form-outline">
-                        <input type="text" id="form9Example3" v-model="Book.author" class="form-control" placeholder="Description" />
+                <hr />
+                <div class="row g-1">
+                    <div class="col">
+                        <!-- Name input -->
+                        <div class="form-outline">
+                            <input type="number" id="form9Example1" v-model="Book.price" class="form-control"
+                                placeholder="price" />
+                        </div>
                     </div>
                 </div>
+
+                <br>
+                <button @click="saveBook" class="btn btn-success">Submit</button>
             </div>
         </div>
-        <hr />
-        <div class="row g-1">
-                <div class="col">
-                    <!-- Name input -->
-                    <div class="form-outline">
-                        <input type="number" id="form9Example1" v-model="Book.price" class="form-control" placeholder="price" />
-                    </div>
-                </div>
-            </div>
-            
-        <br>
-        <button @click="saveBook" class="btn btn-success">Submit</button>
-    </div>
-</div>
-   
 </template>
 <script lang="ts">
 import BookServices from '@/services/BookServices';
@@ -45,19 +48,19 @@ import { defineComponent } from 'vue'
 import ResponseData from '@/services/ResponseData';
 
 export default defineComponent({
-    name:"CreateForm",
-    data(){
-        return{
+    name: "CreateForm",
+    data() {
+        return {
             Book: {
-                title:"",
+                title: "",
                 author: "",
                 price: 0
             } as Book,
             submitted: false,
         }
     },
-    methods:{
-        saveBook(){
+    methods: {
+        saveBook() {
             let data = {
                 title: this.Book.title,
                 author: this.Book.author,
@@ -65,7 +68,7 @@ export default defineComponent({
             };
             BookServices.create(data)
                 .then((response: ResponseData) => {
-                    this.Book.ID= response.data.id;
+                    this.Book.ID = response.data.id;
                     console.log(response.data);
                     this.submitted = true;
                     this.$router.push({ name: "List" });
@@ -73,13 +76,13 @@ export default defineComponent({
                 .catch((e: Error) => {
                     console.log(e);
                 });
-                
+
         },
         newTutorial() {
             this.submitted = false;
             this.Book = {} as Book;
         },
-        
+
     }
 
 })
